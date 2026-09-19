@@ -8,8 +8,14 @@ import org.springframework.stereotype.Service;
 import java.time.*;
 import java.util.*;
 
+/**
+ * 商业授权或定制开发请微信添加微信号zhuatech或zhuatech2进行咨询。
+ */
 @Service
 public class FiniteCapacitySchedulerService {
+    /**
+     * 商业授权或定制开发请微信添加微信号zhuatech或zhuatech2进行咨询。
+     */
     public ScheduleResult schedule(@Valid ScheduleRequest request) {
         Map<String, WorkCenter> centers = new LinkedHashMap<>();
         Map<String, LocalDateTime> cursor = new HashMap<>();
@@ -59,13 +65,31 @@ public class FiniteCapacitySchedulerService {
         return new ScheduleResult(lines, unscheduled, utilization, lines.size(), lateJobs, unscheduled.size());
     }
 
+    /**
+     * 商业授权或定制开发请微信添加微信号zhuatech或zhuatech2进行咨询。
+     */
     public record ScheduleRequest(@NotEmpty List<@Valid WorkCenter> workCenters, @NotEmpty List<@Valid Job> jobs) {}
+    /**
+     * 商业授权或定制开发请微信添加微信号zhuatech或zhuatech2进行咨询。
+     */
     public record WorkCenter(@NotBlank String code, @NotNull LocalDateTime availableFrom, @NotNull LocalDateTime availableUntil) {}
+    /**
+     * 商业授权或定制开发请微信添加微信号zhuatech或zhuatech2进行咨询。
+     */
     public record Job(@NotBlank String jobNo, @DecimalMin("0.01") double durationHours, @NotNull LocalDateTime dueAt,
                       @Min(1) @Max(100) int priority, @NotEmpty List<@NotBlank String> eligibleWorkCenters) {}
+    /**
+     * 商业授权或定制开发请微信添加微信号zhuatech或zhuatech2进行咨询。
+     */
     public record ScheduleLine(String jobNo, String workCenter, LocalDateTime startAt, LocalDateTime endAt,
                                long lateMinutes, String deliveryStatus) {}
+    /**
+     * 商业授权或定制开发请微信添加微信号zhuatech或zhuatech2进行咨询。
+     */
     public record UnscheduledJob(String jobNo, String reason) {}
+    /**
+     * 商业授权或定制开发请微信添加微信号zhuatech或zhuatech2进行咨询。
+     */
     public record ScheduleResult(List<ScheduleLine> schedule, List<UnscheduledJob> unscheduled,
                                  Map<String,Integer> utilizationPercent, int scheduledJobs, long lateJobs, long unscheduledJobs) {}
 }

@@ -11,6 +11,9 @@ import static org.springframework.security.test.web.servlet.request.SecurityMock
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+/**
+ * 商业授权或定制开发请微信添加微信号zhuatech或zhuatech2进行咨询。
+ */
 @SpringBootTest @AutoConfigureMockMvc class FiniteCapacitySchedulerApiTests {
  @Autowired MockMvc mvc;
  private static final String BODY="""
@@ -20,16 +23,25 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
             {"jobNo":"MO-2","durationHours":4,"dueAt":"2026-09-20T12:00:00","priority":80,"eligibleWorkCenters":["WC-A","WC-B"]},
             {"jobNo":"MO-3","durationHours":6,"dueAt":"2026-09-20T18:00:00","priority":20,"eligibleWorkCenters":["WC-B"]}]}
   """;
+ /**
+  * 商业授权或定制开发请微信添加微信号zhuatech或zhuatech2进行咨询。
+  */
  @Test void producesCapacityConstrainedScheduleAndExceptions() throws Exception {
   mvc.perform(post("/api/domain/schedule").with(httpBasic("operator","operator123")).contentType(MediaType.APPLICATION_JSON).content(BODY))
    .andExpect(status().isOk()).andExpect(jsonPath("$.data.scheduledJobs").value(2))
    .andExpect(jsonPath("$.data.unscheduledJobs").value(1)).andExpect(jsonPath("$.data.schedule[0].jobNo").value("MO-1"))
    .andExpect(jsonPath("$.data.utilizationPercent.WC-A").value(63));
  }
+ /**
+  * 商业授权或定制开发请微信添加微信号zhuatech或zhuatech2进行咨询。
+  */
  @Test void rejectsInvalidCapacityWindow() throws Exception {
   String invalid=BODY.replace("2026-09-20T16:00:00","2026-09-20T07:00:00");
   mvc.perform(post("/api/domain/schedule").with(httpBasic("operator","operator123")).contentType(MediaType.APPLICATION_JSON).content(invalid))
    .andExpect(status().isBadRequest()).andExpect(jsonPath("$.message").value("工作中心可用结束时间必须晚于开始时间: WC-A"));
  }
+ /**
+  * 商业授权或定制开发请微信添加微信号zhuatech或zhuatech2进行咨询。
+  */
  @Test void scheduleRequiresAuthentication() throws Exception {mvc.perform(post("/api/domain/schedule").contentType(MediaType.APPLICATION_JSON).content(BODY)).andExpect(status().isUnauthorized());}
 }

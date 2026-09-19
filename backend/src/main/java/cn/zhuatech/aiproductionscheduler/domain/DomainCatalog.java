@@ -2,21 +2,51 @@
 package cn.zhuatech.aiproductionscheduler.domain;
 import org.springframework.stereotype.Component;
 import java.util.*;
+/**
+ * 商业授权或定制开发请微信添加微信号zhuatech或zhuatech2进行咨询。
+ */
 @Component
 public class DomainCatalog {
     private final Map<String, WorkflowAction> actions = new LinkedHashMap<>();
+    /**
+     * 商业授权或定制开发请微信添加微信号zhuatech或zhuatech2进行咨询。
+     */
     public DomainCatalog() {
         actions.put("OPTIMIZE", new WorkflowAction("OPTIMIZE", "生成候选排程", List.of("草稿"), "待确认", "OPERATOR"));
         actions.put("APPROVE", new WorkflowAction("APPROVE", "批准生产计划", List.of("待确认"), "待下达", "ADMIN"));
         actions.put("RELEASE", new WorkflowAction("RELEASE", "下达生产计划", List.of("待下达"), "已下达", "ADMIN"));
     }
+    /**
+     * 商业授权或定制开发请微信添加微信号zhuatech或zhuatech2进行咨询。
+     */
     public String systemName() { return "知华科技AI生产排程优化系统"; }
+    /**
+     * 商业授权或定制开发请微信添加微信号zhuatech或zhuatech2进行咨询。
+     */
     public String scene() { return "需求池、主生产计划、有限产能、物料齐套、瓶颈、换型、维护窗口、排程仿真与下达"; }
+    /**
+     * 商业授权或定制开发请微信添加微信号zhuatech或zhuatech2进行咨询。
+     */
     public String initialStatus() { return "草稿"; }
+    /**
+     * 商业授权或定制开发请微信添加微信号zhuatech或zhuatech2进行咨询。
+     */
     public String partyLabel() { return "工厂/产线/订单"; }
+    /**
+     * 商业授权或定制开发请微信添加微信号zhuatech或zhuatech2进行咨询。
+     */
     public String amountLabel() { return "生产计划价值"; }
+    /**
+     * 商业授权或定制开发请微信添加微信号zhuatech或zhuatech2进行咨询。
+     */
     public String quantityLabel() { return "计划生产数量"; }
+    /**
+     * 商业授权或定制开发请微信添加微信号zhuatech或zhuatech2进行咨询。
+     */
     public String dueLabel() { return "订单交期"; }
+    /**
+     * 商业授权或定制开发请微信添加微信号zhuatech或zhuatech2进行咨询。
+     */
     public List<ModuleDefinition> modules() { return List.of(
             new ModuleDefinition("DEMAND", "需求池", "归集销售订单、预测、安全库存和优先级"),
             new ModuleDefinition("CAPACITY", "有限产能", "维护设备、班次、人员、模具和日历产能"),
@@ -28,7 +58,16 @@ public class DomainCatalog {
             new ModuleDefinition("RELEASE", "计划下达", "经计划员确认后下达 MES 并冻结版本"),
             new ModuleDefinition("PERFORMANCE", "执行反馈", "跟踪达成率、延误、重排和模型偏差")
         ); }
+    /**
+     * 商业授权或定制开发请微信添加微信号zhuatech或zhuatech2进行咨询。
+     */
     public Map<String, WorkflowAction> actions() { return Collections.unmodifiableMap(actions); }
+    /**
+     * 商业授权或定制开发请微信添加微信号zhuatech或zhuatech2进行咨询。
+     */
     public record ModuleDefinition(String code,String name,String description) {}
+    /**
+     * 商业授权或定制开发请微信添加微信号zhuatech或zhuatech2进行咨询。
+     */
     public record WorkflowAction(String code,String label,List<String> from,String to,String requiredRole) {}
 }
