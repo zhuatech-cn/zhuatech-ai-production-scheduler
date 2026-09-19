@@ -1,0 +1,2 @@
+/* Copyright 2026 上海如静知华信息科技有限公司 · https://www.zhuatech.cn/ */
+.engine{display:grid;grid-template-columns:.75fr 1.25fr;gap:24px;margin-top:18px;padding:28px;background:#fff;border:1px solid #e2e8eb;border-radius:14px}.engine span{font-size:12px;letter-spacing:.16em;color:#61727b}.engine h3{margin:7px 0}.engine p{color:#667780}.engine pre{margin:0;padding:18px;max-height:320px;overflow:auto;background:#14262f;color:#d9e8ee;border-radius:10px;white-space:pre-wrap}.engine .run{margin-top:8px}@media(max-width:900px){.engine{grid-template-columns:1fr}}

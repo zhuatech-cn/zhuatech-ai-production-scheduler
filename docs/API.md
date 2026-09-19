@@ -16,12 +16,17 @@
 | GET | `/records/export.csv` | 导出 UTF-8 CSV |
 | GET | `/sla-summary` | SLA、逾期、风险和人员工作量 |
 | POST | `/domain/decision` | 执行AI生产排程优化系统专属领域规则 |
+| POST | `/domain/schedule` | 生成有限产能计划、设备利用率、延期和未排产清单 |
 | GET/POST | `/enterprise/controls` | 企业控制项查询与幂等创建 |
 | POST | `/enterprise/controls/{id}/submit` | 提交复核 |
 | POST | `/admin/enterprise/controls/{id}/review` | 管理员审批或驳回 |
 | POST | `/enterprise/controls/{id}/documents` | 登记附件哈希及存储元数据 |
 | POST | `/enterprise/controls/{id}/complete` | 凭证完整后办结 |
 | POST | `/admin/enterprise/controls/{id}/sync` | 登记外部系统回执 |
+
+## 有限产能排程
+
+`/domain/schedule` 接收工作中心可用时间窗及带优先级、交期、工时、可选设备的工单列表，输出无资源重叠的计划、产能利用率和不可排原因。
 
 ## 领域决策字段
 
