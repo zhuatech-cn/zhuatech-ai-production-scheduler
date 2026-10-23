@@ -1,0 +1,48 @@
+[
+  {
+    "patch": {},
+    "expected": {
+      "decision": "PASS",
+      "startQty": "#100",
+      "requiredMinutes": "#230",
+      "shortageMinutes": "#0"
+    },
+    "error": false
+  },
+  {
+    "patch": {
+      "quantity": "150"
+    },
+    "expected": {
+      "decision": "HOLD",
+      "shortageMinutes": "#30"
+    },
+    "error": false
+  },
+  {
+    "patch": {
+      "yieldPct": "0"
+    },
+    "expected": {},
+    "error": true
+  },
+  {
+    "patch": {
+      "dueDate": "2026-10-22"
+    },
+    "expected": {
+      "decision": "HOLD"
+    },
+    "error": false
+  },
+  {
+    "patch": {
+      "availableMinutes": "230"
+    },
+    "expected": {
+      "decision": "REVIEW",
+      "utilizationPct": "#100"
+    },
+    "error": false
+  }
+]

@@ -1,0 +1,94 @@
+{
+  "slug": "ai-production-scheduler",
+  "title": "良率与换型损耗产能测算",
+  "fields": [
+    {
+      "key": "id",
+      "label": "记录编号",
+      "type": "ID"
+    },
+    {
+      "key": "quantity",
+      "label": "合格需求量",
+      "type": "NUMBER",
+      "scale": 0,
+      "min": "0",
+      "max": "1000000"
+    },
+    {
+      "key": "cycleMinutes",
+      "label": "单件加工分钟",
+      "type": "NUMBER",
+      "scale": 6,
+      "min": "0",
+      "max": "1000000000000"
+    },
+    {
+      "key": "setupMinutes",
+      "label": "换型分钟",
+      "type": "NUMBER",
+      "scale": 6,
+      "min": "0",
+      "max": "1000000000000"
+    },
+    {
+      "key": "availableMinutes",
+      "label": "可用分钟",
+      "type": "NUMBER",
+      "scale": 6,
+      "min": "0.000001",
+      "max": "1000000000000"
+    },
+    {
+      "key": "yieldPct",
+      "label": "预计良率%",
+      "type": "NUMBER",
+      "scale": 4,
+      "min": "0",
+      "max": "100"
+    },
+    {
+      "key": "dueDate",
+      "label": "需求日期",
+      "type": "DATE"
+    }
+  ],
+  "columns": [
+    {
+      "key": "startQty",
+      "label": "建议投产数量"
+    },
+    {
+      "key": "requiredMinutes",
+      "label": "需求分钟"
+    },
+    {
+      "key": "shortageMinutes",
+      "label": "缺口分钟"
+    },
+    {
+      "key": "utilizationPct",
+      "label": "负荷率%"
+    }
+  ],
+  "description": "在有限产能排程之外，按良率向上折算投产量，加入换型时间并计算产能缺口。",
+  "owner": "上海如静知华信息科技有限公司",
+  "website": "https://www.zhuatech.cn/",
+  "authorization": "商业授权或定制开发请微信添加微信号zhuatech或zhuatech2进行咨询。",
+  "version": 1,
+  "notes": "输入均须为已获授权的同口径数据。金额固定人民币元；比例为百分数。核算结果只用于复核，未审批、未写库、未发起外部调用，也未触发付款、签名、资料销毁或设备控制。建议不构成法律、安全、会计或碳核证结论。",
+  "sample": {
+    "asOf": "2026-10-23",
+    "records": [
+      {
+        "id": "ITEM-001",
+        "quantity": "100",
+        "cycleMinutes": "2",
+        "setupMinutes": "30",
+        "availableMinutes": "300",
+        "yieldPct": "100",
+        "dueDate": "2026-11-01"
+      }
+    ]
+  }
+}

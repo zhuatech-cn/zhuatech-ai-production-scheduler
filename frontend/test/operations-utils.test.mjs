@@ -1,0 +1,21 @@
+/* 上海如静知华信息科技有限公司 · https://www.zhuatech.cn/ */
+import test from 'node:test';import assert from 'node:assert/strict';import {readFile} from 'node:fs/promises';
+const source=await readFile(new URL('../public/operations-utils.js',import.meta.url),'utf8');const {compareDecimal,validateField,buildPayload,csvEncode,paginate,localDate,basicHeader,display}=await import('data:text/javascript;base64,'+Buffer.from(source).toString('base64'));
+const fields=[{key:'id',label:'编号',type:'ID'},{key:'amount',label:'金额',type:'NUMBER',min:'0',max:'1000000000000',scale:2}];
+test('decimal comparison never rounds unsafe integers',()=>assert.equal(compareDecimal('9007199254740993.01','9007199254740993.02'),-1));
+test('decimal comparison handles zeros and scales',()=>{assert.equal(compareDecimal('001.20','1.2'),0);assert.equal(compareDecimal('0.01','0.001'),1);});
+test('negative and scientific strings are rejected',()=>{for(const v of ['-1','1e3','NaN','.1'])assert.throws(()=>compareDecimal(v,'0'));});
+test('payload preserves decimal strings',()=>assert.equal(buildPayload(fields,[{id:'A',amount:'999999999999.99'}],'2026-10-23').records[0].amount,'999999999999.99'));
+test('numeric field rejects excess fractional precision',()=>assert.throws(()=>validateField(fields[1],'1.001')));
+test('numeric bounds are exact',()=>{assert.equal(validateField(fields[1],'1000000000000.00'),'1000000000000.00');assert.throws(()=>validateField(fields[1],'1000000000000.01'));});
+test('IDs are deduplicated without case sensitivity',()=>assert.throws(()=>buildPayload(fields,[{id:'A',amount:'1'},{id:'a',amount:'2'}],'2026-10-23')));
+test('empty page and more than 100 rows rejected',()=>{assert.throws(()=>buildPayload(fields,[],'2026-10-23'));assert.throws(()=>buildPayload(fields,Array(101).fill({id:'A',amount:'1'}),'2026-10-23'));});
+test('unknown enum rejected',()=>assert.throws(()=>validateField({key:'state',label:'状态',type:'ENUM',options:['YES']},'NO')));
+test('invalid and blank ID rejected',()=>{assert.throws(()=>validateField(fields[0],'<img>'));assert.throws(()=>validateField(fields[0],' '));});
+test('CSV quotes comma quote and newline',()=>assert.equal(csvEncode([['a,b','a"b','a\nb']]),'\uFEFF"a,b","a""b","a\nb"\r\n'));
+test('CSV escapes all spreadsheet formula prefixes',()=>{const r=csvEncode([['=cmd',' +cmd','-1','@cmd','\t=1']]);for(const x of ["'=cmd","' +cmd","'-1","'@cmd","'\t=1"])assert.ok(r.includes(x));});
+test('large decimal export remains intact',()=>assert.ok(csvEncode([['9007199254740993.01']]).includes('9007199254740993.01')));
+test('pagination clamps to visible range',()=>{const p=paginate(Array.from({length:101},(_,i)=>i),99);assert.equal(p.page,3);assert.equal(p.rows.length,1);});
+test('local date does not use UTC rollover',()=>assert.equal(localDate(new Date(2026,9,23,0,1)),'2026-10-23'));
+test('Basic credentials use UTF8 and reject invalid usernames',()=>{assert.equal(Buffer.from(basicHeader('用户','密码').slice(6),'base64').toString(),'用户:密码');assert.throws(()=>basicHeader('u:x','p'));});
+test('display never coerces decimal strings to floating point',()=>{assert.equal(display('9007199254740993.01'),'9007199254740993.01');assert.equal(display(false),'否');assert.equal(display(null),'—');});
